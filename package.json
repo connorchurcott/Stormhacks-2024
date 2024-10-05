@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/connorchurcott/Stormhacks-2024/issues"
   },
-  "homepage": "https://github.com/connorchurcott/Stormhacks-2024#readme"
+  "homepage": "https://github.com/connorchurcott/Stormhacks-2024#readme",
+  "dependencies": {
+    "env": "^0.0.2",
+    "express": "^4.21.0",
+    "pg": "^8.13.0"
+  }
 }
