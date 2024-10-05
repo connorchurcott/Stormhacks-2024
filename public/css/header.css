@@ -1,3 +1,9 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Optional, helps with sizing elements */
+}
+
 header {
     background-color: #282C2F;
 }
