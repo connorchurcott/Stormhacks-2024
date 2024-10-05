@@ -9,18 +9,26 @@
 <body>
     <header>
         <nav class="headerNav">
-            <img src="../assets/ourLogo.jpg" alt="Logo">
-            
-            <ul>
+
+            <a href="../home">
+                <img src="../assets/ourLogo.png" alt="Logo">
+            </a>
+
+            <ul class="leftOfSearch">
                 <li><a href="../globalrank">Global Ranking</a></li>
                 <li><a href="../newest">Newest</a></li>
-                <li><a href="../forum">Forum</a></li>
+                <li><a href="../forum">Forums</a></li>
             </ul>
 
             <form class="searchForm" action="../search" method="post">
                 <input type="text" name="searchQuery" class="searchBar">
                 <button type="submit" class="searchButton">Submit</button>
             </form>
+
+            <ul class="rightOfSearch">
+                <li><a href="../login">Login</a></li>
+                <li><a href="../signup">Signup</a></li>
+            </ul>
 
         </nav>
     </header>
