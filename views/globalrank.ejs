@@ -3,11 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Top 10 Best Rated Manga</title>
     <link rel="stylesheet" href="/css/globalrank.css">
 </head>
 <body>
     <%- include('partials/header') %>
-    
+
+    <h2>Best Rated Manga of All Time</h2>
+    <div class="best-rated-manga-container">
+        <%- console.log(popularManga); %> <!-- Log popularManga to the console -->
+        <% if (popularManga && popularManga.length) { %>
+            <% popularManga.forEach(function(manga) { %>
+                <div class="manga-item">
+                    <img src="<%= manga.coverImage.large %>" alt="<%= manga.title.romaji || manga.title.english %>">
+                    <p><%= manga.title.romaji || manga.title.english %></p>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p>No manga found.</p>
+        <% } %>
+    </div>
 </body>
 </html>

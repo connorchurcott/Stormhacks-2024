@@ -54,9 +54,10 @@ main {
 }
 
 .recomendations img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
+    width: 200px;              /* Set a fixed width for all images */
+    height: 300px;             /* Set a fixed height for all images */
+    object-fit: cover;         /* Ensures the image covers the area, cropping if necessary */
+    border-radius: 8px;       /* Optional: Rounded corners for images */
 }
 
 .recomendations p {

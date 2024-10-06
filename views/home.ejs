@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Manga Releases</title>
+    <title>Document</title>
     <link rel="stylesheet" href="/css/home.css">
 </head>
 <body>
@@ -14,11 +14,12 @@
         <div class="mainPhoto">
             <img src="/assets/mainPhoto.png" alt="Main Photo">
         </div>
+
         <h2>Newest Releases</h2>
         <ul class="recomendations">
             <% newestManga.forEach(function(manga) { %>
                 <li>
-                    <img src="<%= manga.coverImage.large %>" alt="<%= manga.title.romaji %>">
+                    <img src="<%= manga.coverImage.large %>" alt="<%= manga.title.romaji || manga.title.english %>">
                     <p><%= manga.title.romaji || manga.title.english %></p>
                 </li>
             <% }); %>

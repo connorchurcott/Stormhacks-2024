@@ -78,8 +78,48 @@ app.get("/", async (req, res) => {
 });
 
 
-app.get("/globalrank", (req, res) => {
-    res.render("globalrank.ejs", { userStatus: req.session.userStatus });
+app.get('/globalrank', async (req, res) => {
+    try {
+        const graphqlQuery = `
+            query {
+                Page(perPage: 15) {
+                    media(type: MANGA, sort: SCORE_DESC) {
+                        id
+                        title {
+                            romaji
+                            english
+                        }
+                        coverImage {
+                            large
+                        }
+                    }
+                }
+            }
+        `;
+
+        const response = await fetch('https://graphql.anilist.co', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({ query: graphqlQuery }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log(data); // Inspect the data received from the API
+
+        const popularManga = data.data.Page.media || []; // Fallback to empty array if undefined
+
+        res.render('globalrank.ejs', { popularManga }); // Pass the popular manga to the view
+    } catch (error) {
+        console.error('Error fetching best rated manga:', error);
+        res.render('globalrank.ejs', { popularManga: [] }); // Pass an empty array on error
+    }
 });
 
 app.get("/newest", async (req, res) => {
