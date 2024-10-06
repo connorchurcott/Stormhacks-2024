@@ -43,7 +43,7 @@ app.get("/", async (req, res) => {
     try {
         const graphqlQuery = `
             query {
-                Page(perPage: 5) {
+                Page(perPage: 4) {
                     media(sort: [START_DATE_DESC], type: MANGA) {
                         id
                         title {

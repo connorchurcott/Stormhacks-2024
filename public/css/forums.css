@@ -1,3 +1,12 @@
 body {
     background-color: #282C2F;
 }
+
+.construction {
+    text-align: center;
+}
+
+h1 {
+    color: white;
+    font-size: 3em; /* Optional: Adjust the font size for visibility */
+}
