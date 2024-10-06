@@ -17,31 +17,13 @@
             <ul class="leftOfSearch">
                 <li><a href="../globalrank">Global Ranking</a></li>
                 <li><a href="../newest">Newest</a></li>
-<<<<<<< HEAD
-                <li><a href="../forum">Forum</a></li>
-                <!-- search bar here -->
-
-
-
-=======
                 <li><a href="../forum">Forums</a></li>
->>>>>>> dbcc89055e8c18e4e193184f82db32d235791a63
             </ul>
 
             <form class="searchForm" action="../search" method="post">
                 <input type="text" name="searchQuery" class="searchBar">
                 <button type="submit" class="searchButton">Submit</button>
             </form>
-
-            <ul class="rightOfSearch">
-                <% if (user) { %>
-                    <li><a href="/profile">Profile</a></li>
-                    <li><a href="/logout">Logout</a></li>
-                <% } else { %>
-                    <li><a href="/login">Login</a></li>
-                    <li><a href="/signup">Signup</a></li>
-                <% } %>
-            </ul>
     
         </nav>
     </header>

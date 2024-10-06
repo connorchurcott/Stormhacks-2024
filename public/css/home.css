@@ -11,29 +11,37 @@ main {
     flex-direction: column;
     align-items: center;
     height: 100vh;
-    height: 100vh;
 }
 
 .mainPhoto {
     justify-content: center;
     align-items: center;
-    padding: calc(20vh + 10px) 0;
-    margin-bottom: calc(10vh + 10px); 
+    padding: 0;
+    margin-bottom: 20px; 
     width: 90%;
+    height: 70vh;
     border: 2px solid white;
+    overflow: hidden;
 }
-
+.mainPhoto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 .recomendations {
     justify-content: center;
     align-items: center;
     list-style: none;
     display: flex;
+    flex-wrap: wrap; /* Allow wrapping if necessary */
+    width: 90%;
 }
 
 .recomendations li {
     width: 15vh;
     border: 2px solid white;
     height: 200px; 
+    margin: 0 10px;
 }
 
 
