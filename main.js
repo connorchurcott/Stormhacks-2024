@@ -63,6 +63,10 @@ app.get("/searchResults", (req, res) => {
     res.render("searchResults.ejs");
 });
 
+app.get("/mangaEntry", (req, res) => {
+    res.render("mangaEntry.ejs");
+});
+
 app.get("/logout", (req, res) => {
     req.session.userStatus = false;
     req.session.destroy(err => {
@@ -218,7 +222,6 @@ app.post('/search', async (req, res) => {
 });
 
 
-
 app.post("/update-settings", async (req, res) => {
     const nsfwContent = req.body.nsfwContent === 'on'; // Will be true if the checkbox is checked
     const userId = req.session.userId; // Ensure user ID is available in the session
@@ -237,8 +240,6 @@ app.post("/update-settings", async (req, res) => {
         res.redirect("/settings"); // Handle the error as needed
     }
 });
-
-
 
 
 app.listen(port, () => {
