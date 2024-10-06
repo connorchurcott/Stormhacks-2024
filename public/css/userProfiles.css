@@ -1,0 +1,81 @@
+/* Global styles */
+body, html {
+    margin: 0; /* Remove default margins */
+    padding: 0; /* Remove default padding */
+    height: 100%; /* Full height for both body and html */
+    font-family: Arial, sans-serif; /* Set default font */
+    background-color: #282C2F; /* Background color */
+    display: flex; /* Use Flexbox to structure layout */
+}
+
+/* Container to hold both left and right sections */
+.main-container {
+    display: flex; /* Use Flexbox to create two columns */
+    width: 100%; /* Full width */
+    height: 100vh; /* Full viewport height */
+}
+
+/* Profile section on the left */
+.profile-container {
+    display: flex; /* Use Flexbox for alignment */
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to the left */
+    justify-content: center; /* Center items vertically */
+    padding-left: 20px; /* Add padding to the left side */
+    width: 25%; /* 25% width for profile section */
+}
+
+/* Profile picture styles */
+.profile-pic {
+    width: 100px; /* Circle diameter */
+    height: 100px; /* Circle diameter */
+    background-color: #fcfafa; /* Background color for profile picture */
+    border-radius: 50%; /* Makes the image circular */
+    border: 4px solid #fcfafa; /* Border around profile picture */
+    margin-bottom: 15px; /* Space between image and username */
+}
+
+/* Username text styles */
+.username {
+    font-size: 24px; /* Font size for the username */
+    color: #fcfafa; /* Text color */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove padding */
+}
+
+/* Mangas read text styles */
+.mangas-read {
+    font-size: 18px; /* Font size for the mangas read text */
+    color: #fcfafa; /* Text color */
+    margin: 5px 0 0 0; /* Adjust margin to add spacing */
+    padding: 0; /* Remove padding */
+}
+
+/* Container for buttons on the right */
+.button-container {
+    display: flex; /* Use Flexbox for buttons */
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center buttons */
+    width: 75%; /* Take 75% width of the page */
+    padding: 20px; /* Add padding */
+}
+
+/* Manga buttons styling to resemble books */
+.manga-button {
+    width: 120px; /* Button width (narrow) */
+    height: 180px; /* Button height (tall) */
+    margin: 60px; /* Space around each button */
+    background-color: #007BFF; /* Button background color */
+    color: white; /* Button text color */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Slightly rounded corners */
+    font-size: 18px; /* Font size */
+    cursor: pointer; /* Change cursor to pointer */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow */
+    transition: transform 0.2s ease; /* Smooth transform effect */
+}
+
+/* Button hover effect */
+.manga-button:hover {
+    transform: scale(1.30); /* Slightly increase size on hover */
+}
