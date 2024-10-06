@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/css/newest.css">
+    <script>
+        function setMangaId(mangaId) {
+            // Create a form to submit the manga ID
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/mangaEntry'; // This is the route to handle the POST
+
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'mangaId'; // This should match the name used in your main.js
+            input.value = mangaId;
+
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
 </head>
 <body>
     <%- include('partials/header') %>
@@ -15,11 +32,9 @@
         <% if (newestManga.length > 0) { %>
             <% newestManga.forEach(manga => { %>
                 <div class="manga-item">
-                    <!-- Wrap the image in a clickable link that navigates to the mangaEntry page with the manga's ID -->
-
-                    <a href="/mangaEntry/<%= manga.id %>">
+                    <!-- Use onclick to trigger the function instead of href -->
+                    <a href="#" onclick="setMangaId('<%= manga.id %>')">
                         <img src="<%= manga.coverImage.large %>" alt="Cover image of <%= manga.title.romaji || manga.title.english %>">
-
                     </a>
                     <p><%= manga.title.romaji || manga.title.english %></p>
                 </div>

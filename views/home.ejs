@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/css/home.css">
+    <script>
+        function setMangaId(mangaId) {
+            // Create a form to submit the manga ID
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = '/mangaEntry'; // This is the route to handle the POST
+
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'mangaId'; // This should match the name used in your main.js
+            input.value = mangaId;
+
+            form.appendChild(input);
+            document.body.appendChild(form);
+            form.submit();
+        }
+    </script>
 </head>
 <body>
 
@@ -18,7 +35,7 @@
         <ul class="recomendations">
             <% newestManga.forEach(function(manga) { %>
                 <li>
-                    <a href="/mangaEntry">
+                    <a href="#" onclick="setMangaId('<%= manga.id %>')"> <!-- Use onclick to trigger the function -->
                         <img src="<%= manga.coverImage.large %>" alt="<%= manga.title.romaji || manga.title.english %>">
                         <!-- <p><%= manga.title.romaji || manga.title.english %></p> -->
                     </a>
