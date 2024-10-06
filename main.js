@@ -182,9 +182,6 @@ app.get("/searchResults", (req, res) => {
     res.render("searchResults.ejs");
 });
 
-app.get("/mangaEntry", (req, res) => {
-    res.render("mangaEntry.ejs");
-});
 
 app.get("/logout", (req, res) => {
     req.session.userStatus = false;
@@ -357,6 +354,83 @@ app.post("/update-settings", async (req, res) => {
     } catch (err) {
         console.error('Error updating settings:', err); // Log the error
         res.redirect("/settings"); // Handle the error as needed
+    }
+});
+
+// Middleware to set EJS as the view engine
+app.set('view engine', 'ejs');
+
+// POST route to handle the manga ID submission
+app.post('/mangaEntry', async (req, res) => {
+    const mangaId = req.body.mangaId; // Get the manga ID from the POST request
+
+    if (!mangaId) {
+        return res.status(400).send("No manga ID provided"); // Send a response if no ID is provided
+    }
+
+    req.session.mangaId = mangaId; // Store the manga ID in session
+    res.redirect(`/mangaEntry/${mangaId}`); // Redirect to the GET mangaEntry route with the manga ID
+});
+
+// GET route to display manga details
+app.get('/mangaEntry/:id', async (req, res) => {
+    const mangaId = req.params.id; // Get manga ID from the URL parameter
+
+    try {
+        const graphqlQuery = `
+            query ($id: Int) {
+                Media(id: $id, type: MANGA) {
+                    id
+                    title {
+                        romaji
+                        english
+                    }
+                    description
+                    coverImage {
+                        large
+                    }
+                    chapters
+                    volumes
+                    startDate {
+                        year
+                        month
+                        day
+                    }
+                    genres
+                    status
+                    isAdult
+                }
+            }
+        `;
+
+        const variables = { id: parseInt(mangaId) };
+
+        const response = await fetch('https://graphql.anilist.co/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({ query: graphqlQuery, variables }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (!data.data || !data.data.Media) {
+            throw new Error('No media found');
+        }
+
+        const manga = data.data.Media;
+
+        // Render the manga entry page with the specific manga details
+        res.render('mangaEntry.ejs', { manga });
+    } catch (error) {
+        console.error('Error fetching manga details:', error);
+        res.render('mangaEntry.ejs', { manga: null, error: 'Could not fetch manga details' });
     }
 });
 
