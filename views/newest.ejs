@@ -8,6 +8,19 @@
 </head>
 <body>
     <%- include('partials/header') %>
-    
+
+    <div class="newest-manga-container">
+        <% if (newestManga.length > 0) { %>
+            <% newestManga.forEach(manga => { %>
+                <div class="manga-item">
+                    <img src="<%= manga.coverImage.large %>" alt="Cover image of <%= manga.title.romaji || manga.title.english %>">
+                    <h3><%= manga.title.romaji || manga.title.english %></h3>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p>No manga found.</p>
+        <% } %>
+    </div>
+
 </body>
 </html>
