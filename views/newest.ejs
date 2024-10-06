@@ -9,8 +9,9 @@
 <body>
     <%- include('partials/header') %>
 
+    <h2>Newest Releases</h2>
     <div class="newest-manga-container">
-        <h2>Newest Releases</h2>
+
         <% if (newestManga.length > 0) { %>
             <% newestManga.forEach(manga => { %>
                 <div class="manga-item">
