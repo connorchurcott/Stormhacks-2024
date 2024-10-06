@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Settings</title>
+    <link rel="stylesheet" href="/css/settings.css"> <!-- Link to your CSS file for styling -->
+</head>
+<body>
+    <h1>User Settings</h1>
+
+    <form action="/update-settings" method="POST">
+        <label>
+            <input type="checkbox" name="nsfwContent" <% if (viewnsfw) { %> checked <% } %>> Show NSFW Content
+        </label>
+        <br>
+        <button type="submit">Save Settings</button>
+    </form>
+    
+    
+    
+    
+
+    <a href="/userProfiles">Back to Profile</a>
+</body>
+</html>
