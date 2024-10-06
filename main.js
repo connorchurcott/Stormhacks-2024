@@ -52,6 +52,21 @@ app.get("/signup", (req, res) => {
     res.render("signup.ejs"); // Render the signup page
 });
 
+app.get("/login", (req, res) => {
+    res.render("login.ejs");
+});
+
+app.get("/logout", (req, res) => {
+    req.session.userStatus = false; // Set userStatus to false first
+    req.session.destroy(err => {
+        if (err) {
+            console.log(err);
+            return res.redirect("/"); // Redirect on error
+        }
+        res.redirect("/"); // Redirect to home after logging out
+    });
+});
+
 
 app.get("/forum", (req, res) => {
     res.render("forum.ejs");
