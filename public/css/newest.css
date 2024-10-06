@@ -1,3 +1,97 @@
-body {
+/* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: Arial, sans-serif;
     background-color: #282C2F;
+}
+
+h3 {
+    font-size: 1.5em;
+    color: #fcfafa;
+    margin-top: 10px;
+    text-align: center;
+}
+
+/* Container for all manga items */
+.newest-manga-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+}
+
+/* Each manga item */
+.manga-item {
+    width: 200px;
+    margin: 20px;
+    position: relative;
+    text-align: center;
+}
+
+/* Manga cover image */
+.manga-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Manga title */
+.manga-item h3 {
+    margin-top: 10px;
+    color: #fcfafa;
+}
+
+/* Hover effect for images */
+.manga-item img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Button or link effect for manga items */
+.manga-item a {
+    display: block;
+    text-decoration: none;
+    color: white;
+    transition: color 0.3s ease;
+}
+
+/* Optional button-style class (if used) */
+.manga-button {
+    background-color: #343a40;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 10px;
+    display: inline-block;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+.manga-button:hover {
+    background-color: #495057;
+}
+
+/* Align content within the manga items */
+.manga-info {
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* Additional details for manga */
+.manga-title, .manga-rating, .manga-genre, .manga-chapters, .manga-status {
+    font-size: 1em;
+    color: #fcfafa;
+    margin: 5px 0;
+}
+
+p {
+    margin-top: 5px; /* Space between image and title */
+    color: white; /* Title color */
+    text-align: center; /* Center title */
 }
