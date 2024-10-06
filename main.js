@@ -7,10 +7,13 @@ const port = 3000;
 
 const db = new pg.Client({
     user: "sh24_demo_user",
-    host: "dpg-cs0pqhbtq21c73ehun2g-a",
+    host: "dpg-cs0pqhbtq21c73ehun2g-a.oregon-postgres.render.com",
     database: "sh24_demo",
     password: "FwFylqXOkt6pB0saR7ARiwpLO2xdlrrF",
     port: 5432,
+    ssl: {
+        rejectUnauthorized: false  // Use true if you have the proper certificates
+    },
 });
 db.connect();
 
