@@ -56,6 +56,10 @@ app.get("/login", (req, res) => {
     res.render("login.ejs");
 });
 
+app.get("/userProfiles", (req, res) => {
+    res.render("userProfiles.ejs");
+});
+
 app.get("/logout", (req, res) => {
     req.session.userStatus = false; // Set userStatus to false first
     req.session.destroy(err => {
