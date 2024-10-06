@@ -35,9 +35,44 @@ app.use((req, res, next) => {
     next();
 });
 // Routes
-app.get("/", (req, res) => {
-    res.render("home.ejs");
+app.get("/", async (req, res) => {
+    try {
+        const graphqlQuery = `
+            query {
+                Page(perPage: 5) {
+                    media(sort: [START_DATE_DESC], type: MANGA) {
+                        id
+                        title {
+                            romaji
+                            english
+                        }
+                        coverImage {
+                            large
+                        }
+                    }
+                }
+            }
+        `;
+
+        const response = await fetch('https://graphql.anilist.co', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({ query: graphqlQuery }),
+        });
+
+        const data = await response.json();
+        const newestManga = data.data.Page.media; // Get the newest manga
+
+        res.render("home.ejs", { newestManga }); // Pass the newest manga to the view
+    } catch (error) {
+        console.error('Error fetching newest manga:', error);
+        res.render("home.ejs", { newestManga: [] }); // Pass an empty array on error
+    }
 });
+
 
 app.get("/globalrank", (req, res) => {
     res.render("globalrank.ejs", { userStatus: req.session.userStatus });

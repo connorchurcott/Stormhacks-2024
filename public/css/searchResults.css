@@ -10,7 +10,7 @@ a {
 h1 {
     padding-top: 20px;
     color: white;
-    text-align: center; /* Center the title */
+    text-align: left; /* Center the title */
 }
 
 h2 {

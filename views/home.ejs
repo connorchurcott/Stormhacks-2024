@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>New Manga Releases</title>
     <link rel="stylesheet" href="/css/home.css">
 </head>
 <body>
@@ -11,21 +11,19 @@
     <%- include('partials/header') %>
 
     <main>
-
         <div class="mainPhoto">
-            <img src="/assets/mainPhoto.png" alt="mainPhoto">
+            <img src="/assets/mainPhoto.png" alt="Main Photo">
         </div>
-
-        
+        <h2>Newest Releases</h2>
         <ul class="recomendations">
-            <li><img src="../assets/manga1.jpg" alt="Manga 1"></li>
-            <li><img src="../assets/manga2.jpg" alt="Manga 2"></li>
-            <li><img src="../assets/manga3.jpg" alt="Manga 3"></li>
-            <li><img src="../assets/manga4.jpg" alt="Manga 4"></li>
-            <li><img src="../assets/manga5.jpg" alt="Manga 5"></li>
+            <% newestManga.forEach(function(manga) { %>
+                <li>
+                    <img src="<%= manga.coverImage.large %>" alt="<%= manga.title.romaji %>">
+                    <p><%= manga.title.romaji || manga.title.english %></p>
+                </li>
+            <% }); %>
         </ul>
-
-
     </main>
+
 </body>
 </html>
