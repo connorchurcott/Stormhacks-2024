@@ -47,6 +47,10 @@ app.get("/newest", (req, res) => {
     res.render("newest.ejs");
 });
 
+app.get("/userProfiles", (req, res) => {
+    res.render("userProfiles.ejs");
+});
+
 app.get("/signup", (req, res) => {
     res.render("signup.ejs");
 });
@@ -73,6 +77,7 @@ app.get("/logout", (req, res) => {
 app.get("/forum", (req, res) => {
     res.render("forum.ejs");
 });
+
 
 app.post("/signup", async (req, res) => {
     const { email, password, username } = req.body;
@@ -108,6 +113,7 @@ app.post("/login", async (req, res) => {
             const user = result.rows[0];
             if (password === user.password) {
                 req.session.userStatus = true;
+                req.session.userId = user.id; // Store user ID in session
                 res.redirect("/");
             } else {
                 res.send("Incorrect Password");
@@ -120,39 +126,63 @@ app.post("/login", async (req, res) => {
     }
 });
 
-app.post('/search', async (req, res) => {
-    const title = req.body.searchQuery;
 
-    const graphqlQuery = `
-        query ($title: String) {
-            Page {
-                media(search: $title, type: MANGA) {
-                    id
-                    title {
-                        romaji
-                        english
-                    }
-                    description
-                    coverImage {
-                        large
-                    }
-                    chapters
-                    volumes
-                    startDate {
-                        year
-                        month
-                        day
-                    }
-                    genres
-                    status
-                }
-            }
-        }
-    `;
-
-    const variables = { title };
+app.get("/settings", async (req, res) => {
+    const userId = req.session.userId; // Get user ID from session
 
     try {
+        // Fetch the user's current NSFW setting from the database
+        const userResult = await db.query("SELECT viewnsfw FROM users WHERE id = $1", [userId]);
+        const viewnsfw = userResult.rows[0]?.viewnsfw || false; // Default to false if not found
+
+        res.render("settings.ejs", { userStatus: req.session.userStatus, viewnsfw }); // Pass the viewnsfw value to the view
+    } catch (err) {
+        console.error('Error fetching settings:', err);
+        res.render("settings.ejs", { userStatus: req.session.userStatus, viewnsfw: false }); // Fallback to false on error
+    }
+});
+
+
+app.post('/search', async (req, res) => {
+    const title = req.body.searchQuery;
+    const userId = req.session.userId; // Assuming userId is in the session
+    let userPref;
+
+    try {
+        // Fetch user preference for NSFW content
+        const userResult = await db.query("SELECT viewNSFW FROM users WHERE id = $1", [userId]);
+        userPref = userResult.rows[0]?.viewNSFW;
+
+        const graphqlQuery = `
+            query ($title: String) {
+                Page {
+                    media(search: $title, type: MANGA) {
+                        id
+                        title {
+                            romaji
+                            english
+                        }
+                        description
+                        coverImage {
+                            large
+                        }
+                        chapters
+                        volumes
+                        startDate {
+                            year
+                            month
+                            day
+                        }
+                        genres
+                        status
+                        isAdult
+                    }
+                }
+            }
+        `;
+
+        const variables = { title };
+
         const response = await fetch('https://graphql.anilist.co', {
             method: 'POST',
             headers: {
@@ -162,8 +192,22 @@ app.post('/search', async (req, res) => {
             body: JSON.stringify({ query: graphqlQuery, variables }),
         });
 
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
         const data = await response.json();
-        const mangaList = data.data.Page.media; // Get all matching media
+
+        if (!data.data || !data.data.Page || !data.data.Page.media) {
+            throw new Error('No media found');
+        }
+
+        let mangaList = data.data.Page.media;
+
+        // Filter out NSFW content if the user has not enabled it
+        if (!userPref) {
+            mangaList = mangaList.filter(manga => !manga.isAdult);
+        }
 
         // Render the search results page with the manga list
         res.render('searchResults.ejs', { mangaList, searchQuery: title, error: null });
@@ -172,6 +216,30 @@ app.post('/search', async (req, res) => {
         res.render('searchResults.ejs', { mangaList: [], searchQuery: title, error: 'Could not fetch manga information' });
     }
 });
+
+
+
+app.post("/update-settings", async (req, res) => {
+    const nsfwContent = req.body.nsfwContent === 'on'; // Will be true if the checkbox is checked
+    const userId = req.session.userId; // Ensure user ID is available in the session
+
+    console.log('Updating settings for user ID:', userId); // Debugging log
+    console.log('NSFW Content Setting:', nsfwContent); // Debugging log
+
+    try {
+        // Update the viewnsfw column in your database
+        await db.query("UPDATE users SET viewnsfw = $1 WHERE id = $2", [nsfwContent, userId]);
+        console.log('Settings updated successfully'); // Debugging log
+
+        res.redirect("/settings"); // Redirect back to settings after saving
+    } catch (err) {
+        console.error('Error updating settings:', err); // Log the error
+        res.redirect("/settings"); // Handle the error as needed
+    }
+});
+
+
+
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

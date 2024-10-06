@@ -8,22 +8,26 @@
 </head>
 <body>
     <%- include('partials/header') %>
-    <div class="main-container">
-        <!-- Left profile section -->
-        <div class="profile-container">
-            <img id="profile-pic" src="https://via.placeholder.com/100" alt="Profile Picture" class="profile-pic">
-            <p id="username" class="username">Default Name</p>
-            <p id="mangas-read" class="mangas-read"># of Mangas Read: </p>
-        </div>
+    <form action="/userProfiles" method="POST">
+        <div class="main-container">
+            <!-- Left profile section -->
+            <div class="profile-container">
+                <img id="profile-pic" src="https://via.placeholder.com/100" alt="Profile Picture" class="profile-pic">
+                <p id="username" class="username">Default Name</p>
+                <p id="mangas-read" class="mangas-read"># of Mangas Read: </p>
+                <a href="/settings" class="settings-button">Manage NSFW Settings</a>
+            </div>
 
-        <!-- Right button section -->
-        <div class="button-container">
-            <!-- 4 buttons for searching manga -->
-            <button class="manga-button">Search Manga 1</button>
-            <button class="manga-button">Search Manga 2</button>
-            <button class="manga-button">Search Manga 3</button>
-            <button class="manga-button">Search Manga 4</button>
+            <!-- Right button section -->
+            <div class="button-container">
+                <!-- 4 buttons for searching manga -->
+                <button class="manga-button">Search Manga 1</button>
+                <button class="manga-button">Search Manga 2</button>
+                <button class="manga-button">Search Manga 3</button>
+                <button class="manga-button">Search Manga 4</button>
+            </div>
+
         </div>
-    </div>
+    </form> 
 </body>
 </html>
