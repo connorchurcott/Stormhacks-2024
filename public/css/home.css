@@ -18,7 +18,8 @@ main {
     justify-content: center;
     align-items: center;
     padding: calc(20vh + 10px) 0;
-    margin-bottom: calc(10vh + 10px); 
+    margin-top: 25px;
+    margin-bottom: calc(8vh + 10px); 
     width: 90%;
     border: 2px solid white;
 }
@@ -28,13 +29,11 @@ main {
     align-items: center;
     list-style: none;
     display: flex;
+    gap: 50px;
 }
 
 .recomendations li {
-    width: 15vh;
+    width: 20vh;
     border: 2px solid white;
     height: 200px; 
 }
-
-
-
