@@ -37,7 +37,7 @@ app.post("/signup", async (req, res) => {
     const email = req.body.username;
     const password = req.body.password;
     const username = req.body.username
-    let user = false;
+    let userStatus = false;
 
     try {
         const checkResultEmail = await db.query("SELECT * FROM users WHERE email = $1", [email, ]);
@@ -51,9 +51,9 @@ app.post("/signup", async (req, res) => {
           "INSERT INTO users (email, username password) VALUES ($1, $2, $3)",
           [email, username, password]
           );
+          userStatus = true;
           console.log(result);
           res.render("home.ejs");
-          user = true;
          } 
         } catch (err) {
           console.log(err);
@@ -61,20 +61,20 @@ app.post("/signup", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-    const email = req.body.username;
     const password = req.body.password;
-    let user = false;
+    const username = req.body.username;
+    let userStatus = false;
   try {
-    const result = await db.query("SELECT * FROM users WHERE email = $1", [email, ]);
+    const result = await db.query("SELECT * FROM users WHERE username = $1", [username, ]);
 
     if (result.rows.length > 0) {
       const user = result.rows[0];
       const storedPassword = user.password;
 
       if (password === storedPassword) {
+        userStatus = true;
         res.render("home.ejs");
         console.log(result);
-        user = true;
       } else {
         res.send("Incorrect Password");
       };
