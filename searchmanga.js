@@ -1,27 +1,43 @@
-//eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjkyNTc2YjM2NDZkMWZlMWRkMjdiODFlMWI5OTRhY2QzNjk4Y2RiN2MwMGZmYzVhZWEzZWVhOTZlMDM1YzFlMWFkZGJlOTIxNzNiNmIzMGMxIn0.eyJhdWQiOiIyMTU4OSIsImp0aSI6IjkyNTc2YjM2NDZkMWZlMWRkMjdiODFlMWI5OTRhY2QzNjk4Y2RiN2MwMGZmYzVhZWEzZWVhOTZlMDM1YzFlMWFkZGJlOTIxNzNiNmIzMGMxIiwiaWF0IjoxNzI4MTg0MDY4LCJuYmYiOjE3MjgxODQwNjgsImV4cCI6MTc1OTcyMDA2OCwic3ViIjoiNjk2NzkzNCIsInNjb3BlcyI6W119.i08aTDkUbKlLzodhLtXfi1AI2d5PZ-ZG0Pj2hz2oanXmS2nrJfo27-z8duvgOxtkiLHuucT01bpQDfgXshFHaRFIoPC0tADZLu-FkZTuJ0ZNsiFfFB2xr8SDO1k4nDRjBpxclxrZREuMk-l-K8kA_FjE3FqmRfYQbgj37PDT5B7zOLV6ElNwQstvPwmNTCYomv4fWgzmCdQBm-oz19WknfnZto89O7SZVA4OR_uc3UqD31NPIAzwnoxorUIcG73a6ooEJk945y-BCPwsGcYlA5WKUvEkMIA5VF1C_92N-kvyGqJJjLn3-IXSU1UWhpo6O89jmH8KfK21ypiPmD0sjg4HBqLuZ_x44m2zAfRWA9tJSOsW42ucl8ghd45ybonXtTNPSdTucYx6_jtrpJmkAYYV4sOoaBcS_KbCTeRPkJRe1VgdL-qDZT0DYYzD60fGO2u_9nO3nIe3LP5K72Rd87WMbNgQ1Y09K8qpXfnZFPYw3ZyGsLH-ymVOivCOg5Df2rNWOjNKikOEG9XQVmN_r8LzoYUB5gREZMLhVPGg9VTCtP81kfP9IFD3lDRXegT_nLqtwXolz7C2gHDCBVS4TziJbKfolt6xcbF2YgwP7k0dfR6jTnY2MPJ3gVVUOW_e_DuNJfbpfu6zCA6zhEEdpBu4bnXvJPPEeoJ0lIziGAE&token_type=Bearer&expires_in=31536000
-import fetch from 'node-fetch';
+document.addEventListener('DOMContentLoaded', () => {
+    const searchForm = document.getElementById('searchForm');
+    const mangaInfoContainer = document.getElementById('mangaInfoContainer');
 
-const query = `
-  query {
-    Page(page: 1, perPage: 10) {
-      media(type: ANIME) {
-        id
-        title {
-          romaji
+    searchForm.addEventListener('submit', async (event) => {
+        event.preventDefault(); // Prevent default form submission
+
+        const searchQuery = document.getElementById('searchQuery').value;
+
+        try {
+            const response = await fetch('/getMangaInfo', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ searchQuery }),
+            });
+
+            const data = await response.json();
+            const mangaInfo = data.mangaInfo;
+            const filePath = data.filePath;
+
+            if (mangaInfo) {
+                mangaInfoContainer.innerHTML = `
+                    <h2>${mangaInfo.title.english || mangaInfo.title.romaji}</h2>
+                    <img src="${mangaInfo.coverImage.large}" alt="Manga Cover" />
+                    <p><strong>Description:</strong> ${mangaInfo.description || 'No description available.'}</p>
+                    <p><strong>Chapters:</strong> ${mangaInfo.chapters || 'N/A'}</p>
+                    <p><strong>Volumes:</strong> ${mangaInfo.volumes || 'N/A'}</p>
+                    <p><strong>Genres:</strong> ${mangaInfo.genres.join(', ') || 'No genres available.'}</p>
+                    <p><strong>Status:</strong> ${mangaInfo.status || 'Unknown'}</p>
+                    <p><strong>Start Date:</strong> ${mangaInfo.startDate.year}-${mangaInfo.startDate.month || 'N/A'}-${mangaInfo.startDate.day || 'N/A'}</p>
+                    <a href="${filePath}" download>Download Manga Info JSON</a>
+                `;
+            } else {
+                mangaInfoContainer.innerHTML = `<p>No manga information found for "${searchQuery}".</p>`;
+            }
+        } catch (error) {
+            console.error('Error fetching manga information:', error);
+            mangaInfoContainer.innerHTML = `<p>Error fetching manga information. Please try again later.</p>`;
         }
-      }
-    }
-  }
-`;
-
-fetch('https://graphql.anilist.co', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjkyNTc2YjM2NDZkMWZlMWRkMjdiODFlMWI5OTRhY2QzNjk4Y2RiN2MwMGZmYzVhZWEzZWVhOTZlMDM1YzFlMWFkZGJlOTIxNzNiNmIzMGMxIn0.eyJhdWQiOiIyMTU4OSIsImp0aSI6IjkyNTc2YjM2NDZkMWZlMWRkMjdiODFlMWI5OTRhY2QzNjk4Y2RiN2MwMGZmYzVhZWEzZWVhOTZlMDM1YzFlMWFkZGJlOTIxNzNiNmIzMGMxIiwiaWF0IjoxNzI4MTg0MDY4LCJuYmYiOjE3MjgxODQwNjgsImV4cCI6MTc1OTcyMDA2OCwic3ViIjoiNjk2NzkzNCIsInNjb3BlcyI6W119.i08aTDkUbKlLzodhLtXfi1AI2d5PZ-ZG0Pj2hz2oanXmS2nrJfo27-z8duvgOxtkiLHuucT01bpQDfgXshFHaRFIoPC0tADZLu-FkZTuJ0ZNsiFfFB2xr8SDO1k4nDRjBpxclxrZREuMk-l-K8kA_FjE3FqmRfYQbgj37PDT5B7zOLV6ElNwQstvPwmNTCYomv4fWgzmCdQBm-oz19WknfnZto89O7SZVA4OR_uc3UqD31NPIAzwnoxorUIcG73a6ooEJk945y-BCPwsGcYlA5WKUvEkMIA5VF1C_92N-kvyGqJJjLn3-IXSU1UWhpo6O89jmH8KfK21ypiPmD0sjg4HBqLuZ_x44m2zAfRWA9tJSOsW42ucl8ghd45ybonXtTNPSdTucYx6_jtrpJmkAYYV4sOoaBcS_KbCTeRPkJRe1VgdL-qDZT0DYYzD60fGO2u_9nO3nIe3LP5K72Rd87WMbNgQ1Y09K8qpXfnZFPYw3ZyGsLH-ymVOivCOg5Df2rNWOjNKikOEG9XQVmN_r8LzoYUB5gREZMLhVPGg9VTCtP81kfP9IFD3lDRXegT_nLqtwXolz7C2gHDCBVS4TziJbKfolt6xcbF2YgwP7k0dfR6jTnY2MPJ3gVVUOW_e_DuNJfbpfu6zCA6zhEEdpBu4bnXvJPPEeoJ0lIziGAE`
-  },
-  body: JSON.stringify({ query })
-})
-.then(response => response.json())
-.then(data => console.log(JSON.stringify(data, null, 2)))
-.catch(error => console.error('Error:', error));
+    });
+});
