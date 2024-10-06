@@ -74,8 +74,47 @@ app.get("/", async (req, res) => {
 });
 
 
-app.get("/newest", (req, res) => {
-    res.render("newest.ejs");
+app.get("/newest", async (req, res) => {
+    try {
+        const graphqlQuery = `
+            query {
+                Page(perPage: 16) {
+                    media(sort: [START_DATE_DESC], type: MANGA) {
+                        id
+                        title {
+                            romaji
+                            english
+                        }
+                        coverImage {
+                            large
+                        }
+                        isAdult
+                    }
+                }
+            }
+        `;
+
+        const response = await fetch('https://graphql.anilist.co/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({ query: graphqlQuery }),
+        });
+
+        const data = await response.json();
+        let newestManga = data.data.Page.media;
+
+        // Filter out NSFW content
+        newestManga = newestManga.filter(manga => !manga.isAdult);
+
+        // Render the view with the filtered data
+        res.render("newest.ejs", { newestManga });
+    } catch (error) {
+        console.error('Error fetching newest manga:', error);
+        res.render("newest.ejs", { newestManga: [] });
+    }
 });
 
 app.get("/userProfiles", (req, res) => {
