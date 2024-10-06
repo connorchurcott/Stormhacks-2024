@@ -35,14 +35,12 @@ main {
     display: flex;
     flex-wrap: wrap; /* Allow wrapping if necessary */
     width: 90%;
+
 }
 
 .recomendations li {
-    width: 15vh;
+    width: 20vh;
     border: 2px solid white;
     height: 200px; 
     margin: 0 10px;
 }
-
-
-
