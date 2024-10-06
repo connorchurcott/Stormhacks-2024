@@ -1,3 +1,4 @@
+<!-- header.ejs -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +10,6 @@
 <body>
     <header>
         <nav class="headerNav">
-
             <a href="/">
                 <img src="../assets/ourLogo.png" alt="Logo">
             </a>
@@ -20,10 +20,10 @@
                 <li><a href="/forum">Forums</a></li>
             </ul>
 
-            <form class="searchForm" action="/searchResults" method="post">
-                <input type="text" name="searchQuery" class="searchBar">
-                <button type="submit" class="searchButton">Submit</button>
-            </form>
+            <form id="searchForm" class="searchForm" action="/search" method="POST">
+                <input class="searchBar" type="text" name="searchQuery" id="searchQuery" placeholder="Search for a manga..." required>
+                <button class="searchButton" type="submit">Search</button>
+            </form>            
 
             <ul class="rightOfSearch">
                 <% if (userStatus) { %>
@@ -34,8 +34,9 @@
                     <li><a href="/signup">Signup</a></li>
                 <% } %>
             </ul>
-    
         </nav>
     </header>
+
+    <div id="searchResultsDropdown" class="dropdown-content"></div> <!-- Dropdown for search results -->
 </body>
 </html>
