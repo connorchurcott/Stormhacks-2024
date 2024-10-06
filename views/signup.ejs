@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Register</title>
     <link rel="stylesheet" href="/css/signupAndLogin.css">
 </head>
 <body>
@@ -19,25 +19,34 @@
     
                 <!-- Makes POST request to /register route -->
                 <form action="/signup" method="POST">
+                    <!-- Email Field -->
                     <div class="form-group">
+                        <input type="email" class="form-control" name="email" placeholder=" " required>
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" name="email" required>
                     </div>
+                    
+                    <!-- Username Field -->
                     <div class="form-group">
+                        <input type="text" class="form-control" name="username" placeholder=" " required>
                         <label for="username">Username</label>
-                        <input type="text" class="form-control" name="username" required>
                     </div>
+                    
+                    <!-- Password Field -->
                     <div class="form-group">
+                        <input type="password" class="form-control" name="password" placeholder=" " required>
                         <label for="password">Password</label>
-                        <input type="password" class="form-control" name="password" required>
                     </div>
+                    
+                    <!-- Submit Button -->
                     <button type="submit" class="btn btn-dark">Sign up</button>
                 </form>
                 
-    
               </div>
             </div>
           </div>
+        </div>
+    </div>
+
     <%- include('partials/footer') %>
 </body>
 </html>
