@@ -8,11 +8,11 @@ body, html {
     background-color: #282C2F;
 }
 
-h3 {
-    font-size: 1.5em;
+h2 {
+    font-size: 2em;
     color: #fcfafa;
-    margin-top: 10px;
-    text-align: center;
+    margin: 20px 0;
+    text-align: center; /* Center the header */
 }
 
 /* Container for all manga items */
