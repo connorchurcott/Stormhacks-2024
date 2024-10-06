@@ -15,8 +15,10 @@
         <% if (popularManga && popularManga.length) { %>
             <% popularManga.forEach(function(manga) { %>
                 <div class="manga-item">
-                    <img src="<%= manga.coverImage.large %>" alt="<%= manga.title.romaji || manga.title.english %>">
-                    <p><%= manga.title.romaji || manga.title.english %></p>
+                    <a href="/mangaEntry">
+                        <img src="<%= manga.coverImage.large %>" alt="<%= manga.title.romaji || manga.title.english %>">
+                        <p><%= manga.title.romaji || manga.title.english %></p>
+                    </a>
                 </div>
             <% }); %>
         <% } else { %>
