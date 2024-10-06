@@ -1,0 +1,104 @@
+/* Global Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #282C2F; /* Light gray background */
+    overflow: hidden; /* Disable scrolling */
+}
+
+/* Center container for the entire form */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 100px); /* Adjust height to allow space at the top */
+    margin-top: 20px; /* Raise the container higher */
+}
+
+/* Title Styles */
+h1 {
+    font-size: 2em; /* Larger font size */
+    margin-bottom: 10px; /* Reduce space below the title */
+    margin-top: 0; /* Remove top margin to raise title higher */
+    color: #fcfafa; /* Dark color for the title text */
+}
+
+/* Card Styles */
+.card {
+    width: 100%; /* Full width */
+    max-width: 900px; /* Increase the card's max width to 900px */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    background-color: #fff; /* White background for the card */
+    padding: 50px; /* Increase internal padding */
+}
+
+/* Card Body Styles */
+.card-body {
+    display: flex;
+    flex-direction: column; /* Stack form elements vertically */
+    justify-content: center; /* Center content within card */
+}
+
+/* Form Field Container */
+.form-group {
+    position: relative;
+    margin-bottom: 50px; /* Space between form elements */
+}
+
+/* Floating Label Styles */
+.form-group label {
+    position: absolute;
+    top: 50%; /* Center the label vertically */
+    left: 0; /* Position at the very left of the input line */
+    transform: translateY(-50%); /* Center the label vertically */
+    font-size: 16px; /* Initial font size */
+    color: #aaa; /* Light gray color */
+    pointer-events: none; /* Make label non-clickable */
+    transition: all 0.3s ease; /* Smooth transition */
+}
+
+/* Input Field Styles */
+.form-control {
+    width: 100%; /* Full width for inputs */
+    padding: 10px 0 10px 0; /* Adjust left padding to align text with label */
+    border: none; /* Remove default border */
+    border-bottom: 2px solid #ccc; /* Underline only */
+    background-color: transparent; /* Transparent background */
+    font-size: 16px; /* Base font size */
+    color: #333; /* Dark text color */
+    box-sizing: border-box; /* Include padding in width */
+}
+
+/* On Focus and With Value (Shrink Label) */
+.form-control:focus + label,
+.form-control:not(:placeholder-shown) + label {
+    top: -20px; /* Move label further up */
+    font-size: 12px; /* Shrink the font size */
+    color: #333; /* Change label color */
+}
+
+/* Input Field Focus Underline Change */
+.form-control:focus {
+    outline: none; /* Remove default focus outline */
+    border-bottom: 2px solid #343a40; /* Dark underline */
+}
+
+/* Button Styles */
+.btn-dark {
+    background-color: #343a40; /* Dark background */
+    color: white; /* White text */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer;
+}
+
+.btn-dark:hover {
+    background-color: #495057; /* Slightly lighter on hover */
+}
