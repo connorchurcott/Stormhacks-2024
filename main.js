@@ -1,12 +1,11 @@
 import express from "express";
 import bodyParser from "body-parser";
 import pg from "pg";
+import session from "express-session";
+import fetch from "node-fetch";
 
 const app = express();
 const port = 3000;
-
-// Assuming express-session is installed and set up
-import session from "express-session";
 
 const db = new pg.Client({
     user: "sh24_demo_user",
@@ -22,6 +21,7 @@ db.connect();
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(express.static("public"));
 app.use(session({
     secret: "your-secret-key",
@@ -34,48 +34,48 @@ app.use((req, res, next) => {
     res.locals.userStatus = req.session.userStatus || false; // Set userStatus for EJS templates
     next();
 });
-
+// Routes
 app.get("/", (req, res) => {
     res.render("home.ejs");
 });
 
 app.get("/globalrank", (req, res) => {
-    res.render("globalrank.ejs", { userStatus: req.session.userStatus }); // Pass userStatus to the view
+    res.render("globalrank.ejs", { userStatus: req.session.userStatus });
 });
-
 
 app.get("/newest", (req, res) => {
     res.render("newest.ejs");
 });
 
 app.get("/signup", (req, res) => {
-    res.render("signup.ejs"); // Render the signup page
+    res.render("signup.ejs");
 });
 
 app.get("/login", (req, res) => {
     res.render("login.ejs");
 });
 
+app.get("/searchResults", (req, res) => {
+    res.render("searchResults.ejs");
+});
+
 app.get("/logout", (req, res) => {
-    req.session.userStatus = false; // Set userStatus to false first
+    req.session.userStatus = false;
     req.session.destroy(err => {
         if (err) {
             console.log(err);
-            return res.redirect("/"); // Redirect on error
+            return res.redirect("/");
         }
-        res.redirect("/"); // Redirect to home after logging out
+        res.redirect("/");
     });
 });
-
 
 app.get("/forum", (req, res) => {
     res.render("forum.ejs");
 });
 
 app.post("/signup", async (req, res) => {
-    const email = req.body.email;
-    const password = req.body.password;
-    const username = req.body.username;
+    const { email, password, username } = req.body;
 
     try {
         const checkResultEmail = await db.query("SELECT * FROM users WHERE email = $1", [email]);
@@ -86,12 +86,12 @@ app.post("/signup", async (req, res) => {
         } else if (checkResultUser.rows.length > 0) {
             res.send("Username already exists. Try logging in.");
         } else {
-            const result = await db.query(
+            await db.query(
                 "INSERT INTO users (email, username, password) VALUES ($1, $2, $3)",
                 [email, username, password]
             );
-            req.session.userStatus = true; // Set session userStatus to true
-            res.redirect("/"); // Redirect to home after signup
+            req.session.userStatus = true;
+            res.redirect("/");
         }
     } catch (err) {
         console.log(err);
@@ -99,19 +99,16 @@ app.post("/signup", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-    const password = req.body.password;
-    const username = req.body.username;
+    const { username, password } = req.body;
 
     try {
         const result = await db.query("SELECT * FROM users WHERE username = $1", [username]);
 
         if (result.rows.length > 0) {
             const user = result.rows[0];
-            const storedPassword = user.password;
-
-            if (password === storedPassword) {
-                req.session.userStatus = true; // Set session userStatus to true
-                res.redirect("/"); // Redirect to home after login
+            if (password === user.password) {
+                req.session.userStatus = true;
+                res.redirect("/");
             } else {
                 res.send("Incorrect Password");
             }
@@ -123,8 +120,57 @@ app.post("/login", async (req, res) => {
     }
 });
 
-app.get("/userProfiles", (req, res) => {
-    res.render("userProfiles.ejs");
+app.post('/search', async (req, res) => {
+    const title = req.body.searchQuery;
+
+    const graphqlQuery = `
+        query ($title: String) {
+            Page {
+                media(search: $title, type: MANGA) {
+                    id
+                    title {
+                        romaji
+                        english
+                    }
+                    description
+                    coverImage {
+                        large
+                    }
+                    chapters
+                    volumes
+                    startDate {
+                        year
+                        month
+                        day
+                    }
+                    genres
+                    status
+                }
+            }
+        }
+    `;
+
+    const variables = { title };
+
+    try {
+        const response = await fetch('https://graphql.anilist.co', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({ query: graphqlQuery, variables }),
+        });
+
+        const data = await response.json();
+        const mangaList = data.data.Page.media; // Get all matching media
+
+        // Render the search results page with the manga list
+        res.render('searchResults.ejs', { mangaList, searchQuery: title, error: null });
+    } catch (error) {
+        console.error('Error fetching manga info:', error);
+        res.render('searchResults.ejs', { mangaList: [], searchQuery: title, error: 'Could not fetch manga information' });
+    }
 });
 
 app.listen(port, () => {
