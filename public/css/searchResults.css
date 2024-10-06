@@ -3,6 +3,10 @@ body {
     margin: 0; /* Reset default margin */
 }
 
+a {
+    text-decoration: none; 
+} 
+
 h1 {
     padding-top: 20px;
     color: white;
@@ -34,15 +38,16 @@ h2 {
     flex-direction: column;  /* Stack title and poster vertically */
     align-items: center;     /* Center items horizontally */
     width: calc(33.33% - 20px); /* Each item takes roughly 33% of the width, minus margin */
-    min-width: 400px;       /* Set a minimum width to prevent items from becoming too small */
+    min-width: 200px;        /* Adjust minimum width for smaller screens */
     box-sizing: border-box;  /* Include padding and border in total width */
     margin: 10px;           /* Space between items */
     margin-bottom: 30px;    /* Add space below each item for spacing between rows */
 }
 
 .poster {
-    width: 80%;              /* Make the poster smaller, adjust the percentage as needed */
+    width: 100%;             /* Make the poster take the full width of the item */
     max-width: 300px;       /* Set a maximum width for the poster */
-    height: auto;            /* Maintain aspect ratio */
+    height: 450px;          /* Set a fixed height for the poster to keep them uniform */
+    object-fit: cover;      /* Cover the entire area, cropping if necessary */
     border-radius: 8px;      /* Optional: Rounded corners for images */
 }

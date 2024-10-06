@@ -59,6 +59,10 @@ app.get("/searchResults", (req, res) => {
     res.render("searchResults.ejs");
 });
 
+app.get("/mangaEntry", (req, res) => {
+    res.render("mangaEntry.ejs");
+});
+
 app.get("/logout", (req, res) => {
     req.session.userStatus = false;
     req.session.destroy(err => {
@@ -172,6 +176,7 @@ app.post('/search', async (req, res) => {
         res.render('searchResults.ejs', { mangaList: [], searchQuery: title, error: 'Could not fetch manga information' });
     }
 });
+
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
