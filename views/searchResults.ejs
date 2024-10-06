@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Results for <%= searchQuery %></title>
-    <link rel="stylesheet" href="/css/results.css">
+    <link rel="stylesheet" href="/css/searchResults.css">
 </head>
 <body>
     <%- include('partials/header') %>
@@ -12,26 +12,23 @@
     <main>
         <h1>Search Results for: <%= searchQuery %></h1>
 
-        <% if (error) { %>
-            <p><%= error %></p>
-        <% } else if (mangaList.length === 0) { %>
-            <p>No results found.</p>
-        <% } else { %>
-            <div class="manga-list">
-                <% mangaList.forEach(manga => { %>
-                    <div class="manga-item">
-                        <h2><%= manga.title.english || manga.title.romaji %></h2>
-                        <img src="<%= manga.coverImage.large %>" alt="Manga Cover" />
-                        <p><strong>Description:</strong> <%= manga.description || 'No description available.' %></p>
-                        <p><strong>Chapters:</strong> <%= manga.chapters || 'N/A' %></p>
-                        <p><strong>Volumes:</strong> <%= manga.volumes || 'N/A' %></p>
-                        <p><strong>Genres:</strong> <%= manga.genres.join(', ') || 'No genres available.' %></p>
-                        <p><strong>Status:</strong> <%= manga.status || 'Unknown' %></p>
-                        <p><strong>Start Date:</strong> <%= manga.startDate.year %> - <%= manga.startDate.month || 'N/A' %> - <%= manga.startDate.day || 'N/A' %></p>
-                    </div>
-                <% }); %>
-            </div>
-        <% } %>
+        <div class="mangaRows">
+            <% if (error) { %>
+                <p><%= error %></p>
+            <% } else if (mangaList.length === 0) { %>
+                <p>No results found.</p>
+            <% } else { %>
+                <div class="manga-list">
+                    <% mangaList.forEach(manga => { %>
+                        <div class="manga-item">
+                            <h2><%= manga.title.english || manga.title.romaji %></h2>
+                            <img class="poster" src="<%= manga.coverImage.large %>" alt="Manga Cover" />
+                        </div>
+                    <% }); %>
+                </div>
+            <% } %>
+        </div>
+
     </main>
 </body>
 </html>
