@@ -5,6 +5,15 @@ import pg from "pg";
 const app = express();
 const port = 3000;
 
+const db = new pg.Client({
+    user: "sh24_demo_user",
+    host: "dpg-cs0pqhbtq21c73ehun2g-a",
+    database: "sh24_demo",
+    password: "FwFylqXOkt6pB0saR7ARiwpLO2xdlrrF",
+    port: 5432,
+});
+db.connect();
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
@@ -27,17 +36,20 @@ app.get("/forum", (req, res) => {
 app.post("/signup", async (req, res) => {
     const email = req.body.username;
     const password = req.body.password;
+    const username = req.body.username
     let user = false;
 
     try {
-        const checkResult = await db.query("SELECT * FROM users WHERE email = $1", [email, ]);
-      
-        if (checkResult.rows.length > 0) {
+        const checkResultEmail = await db.query("SELECT * FROM users WHERE email = $1", [email, ]);
+        const checkResultUser = await db.query("SELECT * FROM users WHERE email = $1", [username, ]);
+        if (checkResultEmail.rows.length > 0) {
           res.send("Email already exists. Try logging in.");
+        } else if (checkResultUser.rows.length > 0) {
+            res.send("Username already exists. Try logging in.");
         } else {
         const result = await db.query(
-          "INSERT INTO users (email, password) VALUES ($1, $2)",
-          [email, password]
+          "INSERT INTO users (email, username password) VALUES ($1, $2, $3)",
+          [email, username, password]
           );
           console.log(result);
           res.render("home.ejs");
