@@ -61,7 +61,7 @@ header {
     padding: 10px 20px; /* Padding inside the button */
     border: none; /* Remove default border */
     border-radius: 0 5px 5px 0; /* Rounded corners on the right */
-    background-color: #007BFF; /* Button background color */
+    background-color: red; /* Button background color */
     color: white; /* Button text color */
     font-size: 16px; /* Font size for button text */
     cursor: pointer; /* Cursor changes to pointer on hover */
@@ -70,7 +70,7 @@ header {
 
 /* Hover effect for the submit button */
 .searchButton:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: darkred; /* Darker blue on hover */
 }
 
 .rightOfSearch {
