@@ -3,27 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><%= manga ? (manga.title.romaji || manga.title.english) : 'Manga Details' %></title>
     <link rel="stylesheet" href="/css/mangaEntry.css">
 </head>
 <body>
     <%- include('partials/header') %>
 
-    <div class="mangaRows">
-        <% if (error) { %>
-            <p><%= error %></p>
-        <% } else if (mangaList.length === 0) { %>
-            <p>No results found.</p>
+    <main>
+        <% if (manga) { %>
+            <h1><%= manga.title.romaji || manga.title.english %></h1>
+            <img src="<%= manga.coverImage.large %>" alt="Manga Cover">
+            <p><%= manga.description %></p>
+            <p><strong>Chapters:</strong> <%= manga.chapters %></p>
+            <p><strong>Volumes:</strong> <%= manga.volumes %></p>
+            <p><strong>Status:</strong> <%= manga.status %></p>
+            <p><strong>Genres:</strong> <%= manga.genres.join(', ') %></p>
         <% } else { %>
-            <div class="manga-list">
-                <div class="manga-item">
-                    <h2><%= manga.title.english || manga.title.romaji %></h2>
-                    <img class="poster" src="<%= manga.coverImage.large %>" alt="Manga Cover" />
-                </div>
-            </div>
+            <p><%= error || 'No manga details available.' %></p>
         <% } %>
-    </div>
-
-    
+    </main>
 </body>
 </html>

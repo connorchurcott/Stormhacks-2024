@@ -1,53 +1,36 @@
 body {
-    background-color: #282C2F;
-    margin: 0; /* Reset default margin */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
 }
-
-a {
-    text-decoration: none; 
-} 
 
 h1 {
-    padding-top: 20px;
-    color: white;
-    text-align: left; /* Center the title */
+    text-align: center;
+    margin: 20px 0;
+    color: #333;
 }
 
-h2 {
-    color: white;
-    text-align: center; /* Center the h2 titles as well */
-    font-size: 1.2rem;  /* Adjust font size to make titles smaller */
-}
-
-.mangaRows {
-    display: flex;            /* Use flexbox for the row */
-    justify-content: center;  /* Center the items in the row */
-    flex-wrap: wrap;         /* Allow items to wrap to the next line if needed */
-    margin: 20px;            /* Margin around the container */
-}
-
-.manga-list {
+main {
     display: flex;
-    flex-wrap: wrap;         /* Allow items to wrap */
-    justify-content: center;  /* Center the items */
-    margin-bottom: 20px;     /* Add margin below the manga list for spacing between rows */
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
 }
 
-.manga-item {
-    display: flex;           /* Allow contents inside to use flexbox */
-    flex-direction: column;  /* Stack title and poster vertically */
-    align-items: center;     /* Center items horizontally */
-    width: calc(33.33% - 20px); /* Each item takes roughly 33% of the width, minus margin */
-    min-width: 200px;        /* Adjust minimum width for smaller screens */
-    box-sizing: border-box;  /* Include padding and border in total width */
-    margin: 10px;           /* Space between items */
-    margin-bottom: 30px;    /* Add space below each item for spacing between rows */
+img {
+    max-width: 300px;
+    border-radius: 8px;
+    margin: 20px 0;
 }
 
-.poster {
-    width: 100%;             /* Make the poster take the full width of the item */
-    max-width: 300px;       /* Set a maximum width for the poster */
-    height: 450px;          /* Set a fixed height for the poster to keep them uniform */
-    object-fit: cover;      /* Cover the entire area, cropping if necessary */
-    border-radius: 8px;      /* Optional: Rounded corners for images */
+p {
+    max-width: 600px;
+    text-align: center;
+    margin: 10px 0;
+    color: #555;
+}
+
+strong {
+    color: #333;
 }
