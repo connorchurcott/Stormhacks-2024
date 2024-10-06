@@ -1,0 +1,40 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #282C2F;
+    overflow: hidden; 
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    height: 100vh;
+}
+
+.mainPhoto {
+    justify-content: center;
+    align-items: center;
+    padding: calc(20vh + 10px) 0;
+    margin-bottom: calc(10vh + 10px); 
+    width: 90%;
+    border: 2px solid white;
+}
+
+.recomendations {
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    display: flex;
+}
+
+.recomendations li {
+    width: 15vh;
+    border: 2px solid white;
+    height: 200px; 
+}
+
+
+

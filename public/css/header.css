@@ -1,11 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Optional, helps with sizing elements */
+}
+
 header {
-    background-color: #282C2F;
+    background-color: #202124;
 }
 
 .headerNav {
     display: flex;
-    justify-content: center; 
     align-items: center; 
+    justify-content: space-between;
+}
+
+.headerNav img {
+    padding-left: 20px;
+    height: 50px; /* Adjust the height to match your navbar's height */
+    width: auto; /* Auto width ensures aspect ratio is maintained */
 }
 
 .headerNav ul {
@@ -20,9 +32,48 @@ header {
 
 .headerNav a {
     text-decoration: none;
+    font-size: 20px;
     color: white;
 }
 
 .headerNav a:hover {
     color: red;
+}
+
+
+.searchForm {
+    display: flex; 
+    align-items: center; 
+    margin-left: 60px; 
+}
+
+.searchBar {
+    padding: 10px 15px; /* Padding inside the input */
+    border: none; /* Remove default border */
+    border-radius: 5px 0 0 5px; /* Rounded corners on the left */
+    outline: none; /* Remove outline on focus */
+    font-size: 16px; /* Font size for the input text */
+    width: 200px; /* Fixed width for the input */
+}
+
+/* Style for the submit button */
+.searchButton {
+    padding: 10px 20px; /* Padding inside the button */
+    border: none; /* Remove default border */
+    border-radius: 0 5px 5px 0; /* Rounded corners on the right */
+    background-color: #007BFF; /* Button background color */
+    color: white; /* Button text color */
+    font-size: 16px; /* Font size for button text */
+    cursor: pointer; /* Cursor changes to pointer on hover */
+    transition: background-color 0.3s; /* Smooth transition for background color */
+}
+
+/* Hover effect for the submit button */
+.searchButton:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.rightOfSearch {
+    margin-left: auto;
+    margin-right: 20px;
 }
