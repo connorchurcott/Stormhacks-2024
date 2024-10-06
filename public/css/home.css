@@ -20,21 +20,21 @@ main {
 }
 
 .mainPhoto {
+    display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0px;
+    padding: 0;
     margin-top: 20px;
     margin-bottom: 20px;
-    width: 90%;
-    height: 40vh; /* Adjust height to fit the screen */
-    border: 2px solid white;
-    overflow: hidden;
+    width: 50%;
+    height: 40vh; /* The container height */
+    overflow: hidden; /* Ensures anything overflowing the container is hidden */
 }
 
 .mainPhoto img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    max-width: 100%; /* Prevents the image from going beyond container width */
+    max-height: 100%; /* Prevents the image from going beyond container height */
+    object-fit: contain; /* Ensures the entire image is visible and scaled to fit */
 }
 
 .recomendations {
