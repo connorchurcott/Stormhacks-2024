@@ -3,9 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>User Profile</title>
+    <link rel="stylesheet" href="/css/userProfiles.css">
 </head>
 <body>
-    
+    <%- include('partials/header') %>
+    <div class="main-container">
+        <!-- Left profile section -->
+        <div class="profile-container">
+            <img id="profile-pic" src="https://via.placeholder.com/100" alt="Profile Picture" class="profile-pic">
+            <p id="username" class="username">Default Name</p>
+            <p id="mangas-read" class="mangas-read"># of Mangas Read: </p>
+        </div>
+
+        <!-- Right button section -->
+        <div class="button-container">
+            <!-- 4 buttons for searching manga -->
+            <button class="manga-button">Search Manga 1</button>
+            <button class="manga-button">Search Manga 2</button>
+            <button class="manga-button">Search Manga 3</button>
+            <button class="manga-button">Search Manga 4</button>
+        </div>
+    </div>
 </body>
 </html>
