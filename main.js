@@ -48,12 +48,17 @@ app.get("/newest", (req, res) => {
     res.render("newest.ejs");
 });
 
+app.get("/signup", (req, res) => {
+    res.render("signup.ejs"); // Render the signup page
+});
+
+
 app.get("/forum", (req, res) => {
     res.render("forum.ejs");
 });
 
 app.post("/signup", async (req, res) => {
-    const email = req.body.username;
+    const email = req.body.email;
     const password = req.body.password;
     const username = req.body.username;
 
